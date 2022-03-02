@@ -3,9 +3,11 @@ from mjrl.utils.fc_network import FCNetwork
 import torch
 from torch.autograd import Variable
 
-
 class MLP:
-    def __init__(self, env_spec, inp_dim=None,
+    def __init__(self, env_spec,
+                 env=None,
+                 inp_dim=None,
+                 action_dim=None, 
                  hidden_sizes=(64,64),
                  min_log_std=-3,
                  init_log_std=0,
@@ -17,8 +19,10 @@ class MLP:
         :param init_log_std: initial log standard deviation
         :param seed: random seed
         """
-        self.n = inp_dim if inp_dim is not None else env_spec.observation_dim  # number of states
-        self.m = env_spec.action_dim  # number of actions
+
+        self.n = inp_dim if inp_dim is not None else env.observation_space.shape[0]  # number of states
+        self.m = action_dim if action_dim is not None else env.action_space.shape[0]
+        # self.m = env_spec.action_dim  # number of actions
         self.min_log_std = min_log_std
 
         # Set seed
