@@ -5,7 +5,7 @@ from torch.autograd import Variable
 
 
 class MLP:
-    def __init__(self, env_spec,
+    def __init__(self, env_spec, inp_dim=None,
                  hidden_sizes=(64,64),
                  min_log_std=-3,
                  init_log_std=0,
@@ -17,7 +17,7 @@ class MLP:
         :param init_log_std: initial log standard deviation
         :param seed: random seed
         """
-        self.n = env_spec.observation_dim  # number of states
+        self.n = inp_dim if inp_dim is not None else env_spec.observation_dim  # number of states
         self.m = env_spec.action_dim  # number of actions
         self.min_log_std = min_log_std
 
