@@ -62,6 +62,7 @@ def _load_latest_policy_and_logs(agent, *, policy_dir, logs_dir):
 def train_agent(job_name, agent,
                 seed = 0,
                 niter = 101,
+                env=None,
                 gamma = 0.995,
                 gae_lambda = None,
                 num_cpu = 1,
@@ -105,7 +106,7 @@ def train_agent(job_name, agent,
             best_perf = train_curve[i-1]
 
         N = num_traj if sample_mode == 'trajectories' else num_samples
-        args = dict(N=N, sample_mode=sample_mode, gamma=gamma, gae_lambda=gae_lambda, num_cpu=num_cpu)
+        args = dict(N=N, sample_mode=sample_mode, gamma=gamma, gae_lambda=gae_lambda, num_cpu=num_cpu, env=env)
         stats = agent.train_step(**args)
         train_curve[i] = stats[0]
 
